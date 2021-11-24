@@ -1,0 +1,43 @@
+sudo apt-get install build-essential python-dev python-smbus python-pi
+
+sudo pip install adafruit-ads1x15
+
+sudo apt-get install build-essential python-dev python-smbus git
+
+cd ~
+
+git clone https://github.com/adafruit/Adafruit_Python_ADS1x15.git
+
+cd Adafruit_Python_ADS1x15
+
+sudo python setup.py install
+
+cd examples
+
+nano simpletest.py
+
+sudo python simpletest.py
+
+cd ~/Adafruit_Python_ADS1x15/examples
+
+cd ~/.local/lib/python2.7/site-packages/Adafruit_PureIO/smbus.py
+
+cd /local/lib/python2.7/site-packages/Adafruit_PureIO/smbus.py
+
+cd /local
+
+cd /usr/local/lib/python2.7/dist-packages/Adafruit_PureIO/
+
+sudo nano smbus.py
+
+pip3 install Adafruit-ADS1x15
+
+cd /home/pi/Adafruit_Python_ADS1x15/examples
+
+python3 simpletest.py
+
+
+
+
+
+

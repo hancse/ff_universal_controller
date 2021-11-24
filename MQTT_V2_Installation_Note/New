@@ -1,0 +1,15 @@
+
+
+cd /etc/mosquitto/
+sudo nano mosquitto.conf
+
+# Make change on the config file
+
+
+#per_listener_settings true
+listener 1883
+allow_anonymous true
+
+#Place your local configuration in /etc/mosquitto/conf.d/
+
+sudo cp mosquitto.conf /etc/mosquitto/conf.d/
