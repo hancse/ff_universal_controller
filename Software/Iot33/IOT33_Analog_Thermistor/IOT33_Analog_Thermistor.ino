@@ -20,6 +20,13 @@ float R1 = 10000;
 float logR2, R2, T, Tf;
 float c1 = 1.009249522e-03, c2 = 2.378405444e-04, c3 = 2.019202697e-07;
 
+// these constants won't change. They are the lowest and highest readings you
+// get from your sensor:
+const int sensorMin = 0;      // sensor minimum, discovered through experiment
+const int sensorMax = 1024;    // sensor maximum, discovered through experiment
+
+uint32_t lastMillis=0;
+float check_value;
 
 void setup() {
 Serial.begin(9600);
@@ -62,6 +69,56 @@ void loop() {
   
   // calculate the estimated value with Kalman Filter
   
+  
+
+  int range = map(real_value, sensorMin, sensorMax, 0, 3);
+
+  // do something different depending on the range value:
+  switch (range) {
+    case 0:    // your hand is on the sensor
+      Serial.println("dark");
+      check_value = R2;
+      Serial.print(" check_value is R2 ");
+      Serial.print(check_value);
+      Serial.println();
+      
+      break;
+    case 1:    // your hand is close to the sensor
+      Serial.println("dim");
+      Serial.println(R2); 
+      if ((millis()-lastMillis)>10000){
+    
+        if (check_value - R2 >= 100){
+          
+            Serial.print(" check_value ");  
+            //Serial.print(Tf);
+            //Serial.print(" F; ");
+            Serial.print(check_value);
+            Serial.println();
+            lastMillis = millis();
+            break;
+        }
+        else if (check_value - R2 < 100){
+            
+            Serial.print(" R2 ");  
+            //Serial.print(Tf);
+            //Serial.print(" F; ");
+            Serial.print(R2);
+            Serial.println();
+            lastMillis = millis();
+            break;
+        }
+        
+      }
+      break;
+    case 2:    // your hand is a few inches from the sensor
+      Serial.println("medium");
+      break;
+    case 3:    // your hand is nowhere near the sensor
+      Serial.println("bright");
+      break;
+  }
+  
 
   // send to Serial output every 100ms
   // use the Serial Ploter for a good visualization
@@ -73,14 +130,14 @@ void loop() {
     //refresh_time = millis() + SERIAL_REFRESH_TIME;
   //}
     
-  Serial.print(" estimated Temperature: "); 
+  //Serial.print(" estimated Temperature: "); 
   
-  Serial.println(estimated_value);
-  Serial.print(" Measure Temperature: ");  
+  //Serial.println(estimated_value);
+  //Serial.print(" Measure Temperature: ");  
   //Serial.print(Tf);
   //Serial.print(" F; ");
-  Serial.print(R2);
-  Serial.println(" C");
+  //Serial.print(R2);
+  //Serial.println(" C");
 
 
    delay(1000);
